@@ -32,7 +32,7 @@ public class ProductosRESTController {
 		}
 	}
 	
-	
+	// Revisar esto
 	
 	@RequestMapping(value= {"/{id}"},method=RequestMethod.GET,produces="application/json")
 	public ResponseEntity<Producto> uno(@PathVariable("id") int id){
