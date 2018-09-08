@@ -5,3 +5,13 @@ ingweb3/.mvn
 ingweb3/.settings
 ingweb3/.classpath
 ingweb3/.project
+
+# taxes
+
+taxes/target
+taxes/.idea
+taxes/.classpath
+taxes/.project
+taxes/.settings
+taxes/.DS_Store
+taxes/taxes.iml
