@@ -23,6 +23,9 @@ public class TaxesCalculator
 
             float amount = Float.parseFloat(br.readLine());
             HashMap<String, Float> calculatedTax = calculate(amount);
+            
+            JSONObject jo = new JSONObject(calculatedTax);
+            System.out.println(jo);
 
         } catch (IOException e) {
             System.out.println( "Sorry, an error has occurred. Please try again!" );
@@ -40,18 +43,13 @@ public class TaxesCalculator
         Taxes taxes = new Taxes();
         HashMap<String, Float> taxesPercentages = taxes.getTaxesPercentage();
 
-        System.out.println("Applicable taxes:");
         float totalAmount = amount;
         for (String tax : taxesPercentages.keySet()) {
             float taxValue = taxesPercentages.get(tax);
             float applicableTax = amount * taxValue;
             calculatedTaxesAmount.put(tax, applicableTax);
-            System.out.println("TAX: " + tax + " = " + applicableTax);
             totalAmount = totalAmount + applicableTax;
         }
-
-        System.out.println("\nTOTAL Amount: " + totalAmount);
-
 
         return calculatedTaxesAmount;
     }
