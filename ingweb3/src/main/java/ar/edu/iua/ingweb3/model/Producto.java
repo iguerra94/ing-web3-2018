@@ -2,9 +2,17 @@ package ar.edu.iua.ingweb3.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Producto {
 	
+	@Id
+	@GeneratedValue
 	private int id;
+	
 	private String descripcion;
 	private double precio;
 	private boolean enStock;
@@ -61,6 +69,5 @@ public class Producto {
 	public void setVencimiento(Date vencimiento) {
 		this.vencimiento = vencimiento;
 	}
-	
-	 	
+		 	
 }
