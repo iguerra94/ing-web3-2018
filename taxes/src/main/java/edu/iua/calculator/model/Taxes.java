@@ -1,39 +1,57 @@
-package edu.iua.calculator;
-import java.sql.*;
-import java.util.HashMap;
+package edu.iua.calculator.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="taxes_details")
 public class Taxes {
+	
+	@Id
+	@GeneratedValue
+	@Column(name="id", nullable = false)
+	private int taxId;
+	
+	@Column(name="tax_name", length = 60)
+	private String taxName;
 
+	@Column(name="tax_percentage", precision = 3)
+	private Float taxPercentage;
 
-    private Connection getConnection() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/taxes" + "?useSSL=false", "root", "root");
-            return con;
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
+	public Taxes() {}
 
-    public HashMap<String, Float> getTaxesPercentage() {
+	public Taxes(int taxId, String taxName, Float taxPercentage) {
+		super();
+		this.taxId = taxId;
+		this.taxName = taxName;
+		this.taxPercentage = taxPercentage;
+	}
 
-        HashMap<String, Float> taxesPercentage = new HashMap<String, Float>();
+	public int getTaxId() {
+		return taxId;
+	}
 
-        try{
-                Statement stmt=getConnection().createStatement();
-                ResultSet rs=stmt.executeQuery("select tax_name, tax_percentage from taxes_details");
-                while(rs.next()){
-                    taxesPercentage.put(rs.getString(1), rs.getFloat(2));
-                }
+	public void setTaxId(int taxId) {
+		this.taxId = taxId;
+	}
 
-        } catch(Exception e) {
-            System.out.println(e);
-        }
+	public String getTaxName() {
+		return taxName;
+	}
 
-        return taxesPercentage;
-    }
+	public void setTaxName(String taxName) {
+		this.taxName = taxName;
+	}
 
+	public Float getTaxPercentage() {
+		return taxPercentage;
+	}
+
+	public void setTaxPercentage(Float taxPercentage) {
+		this.taxPercentage = taxPercentage;
+	}
+	
 }
