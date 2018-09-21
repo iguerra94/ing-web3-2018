@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,15 +21,19 @@ public class Clients {
 	@Column(name="client_id", nullable = false)
 	private int clientId;
 	
-	@Column(name="name", length = 60)
+	@Column(name="name", length = 60, nullable = false)
 	private String name;
 
-	@Column(name="last_name", length = 60)
+	@Column(name="last_name", length = 60, nullable = false)
 	private String lastName;
 	
 	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "address_id")
 	private Addresses address;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "identification_id")
+	private IdentificationType identificationType;
 
 	public Clients() {}
 

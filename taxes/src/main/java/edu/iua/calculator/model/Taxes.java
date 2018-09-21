@@ -15,10 +15,10 @@ public class Taxes {
 	@Column(name="id", nullable = false)
 	private int taxId;
 	
-	@Column(name="tax_name", length = 60)
+	@Column(name="tax_name", length = 60, nullable = false)
 	private String taxName;
 
-	@Column(name="tax_percentage", precision = 3)
+	@Column(name="tax_percentage", precision = 3, nullable = false)
 	private Float taxPercentage;
 
 	public Taxes() {}

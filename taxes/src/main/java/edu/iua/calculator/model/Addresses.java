@@ -16,19 +16,19 @@ public class Addresses {
 	@Column(name = "address_id", nullable = false)
 	private int addressId;
 	
-	@Column(name = "street", length = 150)
+	@Column(name = "street", length = 150, nullable = false)
 	private String street;
 	
-	@Column(name = "number")
+	@Column(name = "number", nullable = false)
 	private int number;
 	
-	@Column(name = "city", length = 100)
+	@Column(name = "city", length = 100, nullable = false)
 	private String city;
 	
 	@Column(name = "state", length = 100)
 	private String state;
 
-	@Column(name = "country", length = 100)
+	@Column(name = "country", length = 100, nullable = false)
 	private String country;
 	
 	@Column(name = "zip_code")

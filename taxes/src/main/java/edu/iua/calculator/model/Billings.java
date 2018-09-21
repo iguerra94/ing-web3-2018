@@ -18,7 +18,7 @@ public class Billings {
 	@Column(name="billing_id", nullable = false)
 	private int billingId;
 
-	@Column(name="amount", precision = 3)
+	@Column(name="amount", precision = 3, nullable = false)
 	private Float amount;
 	
 	@Column(name="date", nullable = false)

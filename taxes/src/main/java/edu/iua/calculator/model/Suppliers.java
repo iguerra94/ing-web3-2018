@@ -16,7 +16,7 @@ public class Suppliers {
 	@Column(name = "supplier_id", nullable = false)
 	private int supplierId;
 	
-	@Column(name = "business_name", length = 100)
+	@Column(name = "business_name", length = 100, nullable = false)
 	private String businessName;
 	
 	public Suppliers() {}

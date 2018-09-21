@@ -1,10 +1,15 @@
 package edu.iua.calculator.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +21,11 @@ public class IdentificationType {
 	@Column(name = "identification_id", nullable = false)
 	private int identificationId;
 	
-	@Column(name = "identification_type", length = 100)
+	@Column(name = "identification_type", length = 100, nullable = false)
 	private String identificationType;
+	
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "identificationType")
+	private List<Clients> clients;
 	
 	public IdentificationType() {}
 

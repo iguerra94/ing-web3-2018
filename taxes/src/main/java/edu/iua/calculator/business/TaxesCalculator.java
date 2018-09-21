@@ -32,16 +32,14 @@ public class TaxesCalculator {
 			JSONObject jo = new JSONObject(calculatedTax);
 			System.out.println(jo);
 
-//            int addressId = saveAddress();
+            int addressId = saveAddress();
+			System.out.printf("Address with id = %d was created succesfully.", addressId);
 
-			int idUpdate = 2;
-			int idDelete = 3;
+			updateAddress(addressId);
+			System.out.printf("Address with id = %d was updated succesfully.", addressId);
 
-			updateAddress(idUpdate);
-			System.out.printf("Address with id = %d was updated succesfully.", idUpdate);
-
-			deleteAddress(idDelete);
-			System.out.printf("Address with id = %d was deleted succesfully.", idDelete);
+			deleteAddress(addressId);
+			System.out.printf("Address with id = %d was deleted succesfully.", addressId);
 		} catch (IOException e) {
 			System.out.println("Sorry, an error has occurred. Please try again!");
 		} catch (NumberFormatException e) {
@@ -136,8 +134,8 @@ public class TaxesCalculator {
 				throw new RuntimeException();
 			}
 
-			address.setStreet("Rondeau");
-			address.setNumber(150);
+			address.setStreet("Av. Colon");
+			address.setNumber(1535);
 
 			session.update(address);
 
