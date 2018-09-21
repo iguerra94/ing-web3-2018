@@ -1,6 +1,5 @@
 package ar.edu.iua.ingweb3.business.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,15 +30,15 @@ public class ProductoBusiness implements IProductoBusiness {
 	@Override
 	public Producto getOne(int id) throws BusinessException, NotFoundException {
 		Optional<Producto> producto = null;
+		
 		try {
 			producto = productoDAO.findById(id);
-
-			if (producto == null) {
-				throw new NotFoundException();
-			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new BusinessException(e);
+		}
+		
+		if (!producto.isPresent()) {
+			throw new NotFoundException();
 		}
 	
 		return producto.get();
@@ -57,13 +56,14 @@ public class ProductoBusiness implements IProductoBusiness {
 	@Override
 	public Producto update(Producto producto) throws BusinessException, NotFoundException {
 		Optional<Producto> pr = null;
+		
+		pr = productoDAO.findById(producto.getId());
+
+		if (!pr.isPresent()) {
+			throw new NotFoundException();
+		}
+		
 		try {
-			pr = productoDAO.findById(producto.getId());
-
-			if (pr == null) {
-				throw new NotFoundException();
-			}
-
 			return productoDAO.save(producto);
 		} catch (Exception e) {
 			throw new BusinessException(e);
@@ -73,13 +73,14 @@ public class ProductoBusiness implements IProductoBusiness {
 	@Override
 	public void delete(Producto producto) throws BusinessException, NotFoundException {
 		Optional<Producto> pr = null;
+		
+		pr = productoDAO.findById(producto.getId());
+
+		if (!pr.isPresent()) {
+			throw new NotFoundException();
+		}
+
 		try {
-			pr = productoDAO.findById(producto.getId());
-
-			if (pr == null) {
-				throw new NotFoundException();
-			}			
-
 			productoDAO.delete(producto);
 		} catch (Exception e) {
 			throw new BusinessException(e);
@@ -88,19 +89,17 @@ public class ProductoBusiness implements IProductoBusiness {
 
 	@Override
 	public List<Producto> search(String searchInput) throws BusinessException {
-		List<Producto> resultado = null;
-		List<Producto> r = null;
 		try {
-			resultado = new ArrayList<>();
-			r = productoDAO.findAll();
-			
-			for (Producto p : r) {
-				if (p.getDescripcion().toLowerCase().indexOf(searchInput.toLowerCase()) != -1) {
-					resultado.add(p);
-				}
-			}
-			
-			return resultado;
+			return productoDAO.findByDescripcionContaining(searchInput);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+	}
+
+	@Override
+	public List<Producto> searchByPrecios(double precioDesde, double precioHasta) throws BusinessException {
+		try {
+			return productoDAO.findByPrecioBetween(precioDesde, precioHasta);
 		} catch (Exception e) {
 			throw new BusinessException(e);
 		}

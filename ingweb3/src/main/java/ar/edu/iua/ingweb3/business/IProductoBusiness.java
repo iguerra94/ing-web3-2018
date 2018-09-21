@@ -12,4 +12,5 @@ public interface IProductoBusiness {
 	public Producto update(Producto producto) throws BusinessException, NotFoundException;
 	public void delete(Producto producto) throws BusinessException, NotFoundException;
 	public List<Producto> search(String searchInput) throws BusinessException;
+	public List<Producto> searchByPrecios(double precioDesde, double precioHasta) throws BusinessException;
 }

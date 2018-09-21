@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import ar.edu.iua.ingweb3.business.BusinessException;
@@ -25,9 +26,19 @@ public class ProductosRESTController {
 	private IProductoBusiness productoBusiness;
 
 	@RequestMapping(value= {"","/"},method=RequestMethod.GET,produces="application/json")
-	public ResponseEntity<List<Producto>> lista(){
+	public ResponseEntity<List<Producto>> lista(
+			@RequestParam(required=false, value="q", defaultValue="*") String q,
+			@RequestParam(required=false, value="precio_desde", defaultValue="-1") double precioDesde,
+			@RequestParam(required=false, value="precio_hasta", defaultValue="-1") double precioHasta){
+
 		try {
-			return new ResponseEntity<List<Producto>>(productoBusiness.getAll(), HttpStatus.OK);
+			if (precioDesde != -1 && precioHasta != -1 && precioDesde <= precioHasta) {
+				return new ResponseEntity<List<Producto>>(productoBusiness.searchByPrecios(precioDesde, precioHasta), HttpStatus.OK);
+			} else if (q.equals("*") || q.trim().length() == 0) {
+				return new ResponseEntity<List<Producto>>(productoBusiness.getAll(), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<List<Producto>>(productoBusiness.search(q), HttpStatus.OK);
+			}
 		} catch (BusinessException e) {
 			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -47,8 +58,6 @@ public class ProductosRESTController {
 	@RequestMapping(value= {"","/"},method=RequestMethod.POST,produces="application/json")
 	public ResponseEntity<Producto> add(@RequestBody Producto producto, UriComponentsBuilder uriComponentsBuilder){
 		try {
-			//--------------
-			// AGREGADO ESTO
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(
 				uriComponentsBuilder
@@ -58,11 +67,9 @@ public class ProductosRESTController {
 			);
 			
 			return new ResponseEntity<Producto>(productoBusiness.add(producto), headers, HttpStatus.CREATED);
-			//--------------
 		} catch (BusinessException e) {
 			return new ResponseEntity<Producto>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 
 }
